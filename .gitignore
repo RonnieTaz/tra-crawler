@@ -1,0 +1,7 @@
+# Package files
+/node_modules
+/vendor
+
+# IDE Files
+/.idea
+/.fleet
