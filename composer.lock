@@ -4,82 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac6a81c5cf2d79b52eb6d397a09add98",
+    "content-hash": "0d6c5a36c505950d6e84b17ceabefb9b",
     "packages": [
-        {
-            "name": "foxy/foxy",
-            "version": "v1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fxpio/foxy.git",
-                "reference": "c4154031e18ff404f07608c6778c30bd9afe9966"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fxpio/foxy/zipball/c4154031e18ff404f07608c6778c30bd9afe9966",
-                "reference": "c4154031e18ff404f07608c6778c30bd9afe9966",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1|^2.0",
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "composer/composer": "^1.5.0|^2.0.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Foxy\\Foxy",
-                "branch-alias": {
-                    "dev-1.2": "1.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Foxy\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "François Pluchino",
-                    "email": "francois.pluchino@gmail.com"
-                }
-            ],
-            "description": "Fast, reliable, and secure NPM/Yarn bridge for Composer",
-            "homepage": "https://github.com/fxpio/foxy",
-            "keywords": [
-                "Bridge",
-                "asset",
-                "composer",
-                "dependency manager",
-                "nodejs",
-                "npm",
-                "package",
-                "yarn"
-            ],
-            "support": {
-                "issues": "https://github.com/fxpio/foxy/issues",
-                "source": "https://github.com/fxpio/foxy/tree/v1.2.1"
-            },
-            "funding": [
-                {
-                    "url": "https://paypal.me/francoispluchino",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/francoispluchino",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-04-17T15:36:56+00:00"
-        },
         {
             "name": "guzzlehttp/psr7",
             "version": "2.4.1",
@@ -4720,5 +4646,5 @@
         "php": ">=8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }

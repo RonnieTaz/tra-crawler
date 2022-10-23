@@ -5,3 +5,10 @@
 # IDE Files
 /.idea
 /.fleet
+
+# Test caches
+.phpunit.result.cache
+
+# NPM Dependencies
+package.json
+package-lock.json
