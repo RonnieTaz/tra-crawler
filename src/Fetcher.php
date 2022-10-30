@@ -10,6 +10,7 @@ use Spatie\Browsershot\Browsershot;
 class Fetcher implements ResourceFetcher
 {
     private string $uri;
+    private bool $test = false;
 
     public function __construct(?string $uri = null)
     {
@@ -23,18 +24,23 @@ class Fetcher implements ResourceFetcher
         return $this;
     }
 
+    public function setTestMode(bool $testMode): self
+    {
+        $this->test = $testMode;
+
+        return $this;
+    }
+
     public function load(): string
     {
+        if ($this->test) {
+            return Browsershot::html(file_get_contents(dirname(__DIR__) . '/Dummy/Sample_01.html'))->bodyHtml();
+        }
         return Browsershot::url($this->uri)->bodyHtml();
     }
 
     public function getUri(): string
     {
         return $this->uri;
-    }
-
-    public function jumps(): array
-    {
-        return Browsershot::url($this->uri)->triggeredRequests();
     }
 }

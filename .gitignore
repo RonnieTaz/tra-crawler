@@ -12,3 +12,7 @@
 # NPM Dependencies
 package.json
 package-lock.json
+
+# Test Files
+/Dummy
+index.php

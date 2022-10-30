@@ -5,13 +5,13 @@ use Ronnie\TRA\Contracts\ResourceFetcher;
 use Ronnie\TRA\Crawler;
 
 it('implements ResourceCrawler', function () {
-    $this->assertInstanceOf(ResourceCrawler::class, new Crawler());
+    expect(new Crawler())->toBeInstanceOf(ResourceCrawler::class);
 });
 
 it('has property of fetcher', function () {
-    $this->assertClassHasAttribute('fetcher', Crawler::class);
+    expect(new Crawler())->toHaveProperty('fetcher');
 });
 
 test('property of fetcher is of instance ResourceFetcher', function () {
-    $this->assertInstanceOf(ResourceFetcher::class, (new Crawler())->fetcher);
+    expect((new Crawler())->fetcher)->toBeInstanceOf(ResourceFetcher::class);
 });
