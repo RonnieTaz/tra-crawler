@@ -22,7 +22,7 @@
         "spatie/browsershot": "^3.57",
         "symfony/dom-crawler": "^6.1",
         "symfony/css-selector": "^6.1",
-        "illuminate/collections": "^9.37"
+        "illuminate/collections": "^9.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^6.1",
