@@ -52,8 +52,34 @@ Install Composer dependencies
   composer install
 ```
 
-Use CLI app to test output
-```bash
-  php bin/console app:test-output -i url -u the_receipt_url
+Create an `index.php` file at the root of the project and add the following codes:
+```php
+    <?php
+
+    use Ronnie\TRA\Crawler;
+
+    require_once __DIR__ . '/vendor/autoload.php';
+
+    $url = $_GET['url'] ?? null;
+    $code = $_GET['code'] ?? null;
+    $time = $_GET['time'] ?? null;
+
+    $crawler = new Crawler();
+
+    if (!is_null($url)) {
+        dump($crawler->setUri($url)->crawl());
+    } elseif (!is_null($code) && !is_null($time)) {
+        dump($crawler->setCode($code, $time)->crawl());
+    } else {
+        echo "No url given";
+    }
 ```
 
+Feel free to change the file according to your needs. Then just run the `index.php` in a web server.
+## Contributing
+
+Contributions are always welcome!
+
+See `contributing.md` for ways to get started.
+
+Please adhere to this project's `code of conduct`.
