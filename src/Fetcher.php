@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ronnie\TRA;
 
+use PHP_CodeSniffer\Tests\Core\Autoloader\B;
 use Ronnie\TRA\Contracts\ResourceFetcher;
 use Spatie\Browsershot\Browsershot;
 
@@ -34,9 +35,9 @@ class Fetcher implements ResourceFetcher
     public function load(): string
     {
         if ($this->test) {
-            return Browsershot::html(file_get_contents(dirname(__DIR__) . '/Dummy/Sample_01.html'))->bodyHtml();
+            return Browsershot::html(file_get_contents(dirname(__DIR__) . '/Dummy/Time.html'))->bodyHtml();
         }
-        return Browsershot::url($this->uri)->bodyHtml();
+        return Browsershot::url($this->uri)->timeout(150)->bodyHtml();
     }
 
     public function getUri(): string
