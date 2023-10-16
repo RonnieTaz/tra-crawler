@@ -33,7 +33,7 @@ jobs:
               run: composer-unused --excludePackage=symfony/css-selector
 
             - name: Code sniffer fix
-              run: ./vendor/bin/php-cs-fixer fix src
+              run: php-cs-fixer fix src
 
             - name: Run PHPMD
               run: phpmd . github phpmd.xml --exclude 'tests/*,vendor/*,Dummy/*'
