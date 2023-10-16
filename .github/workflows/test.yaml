@@ -30,7 +30,7 @@ jobs:
               run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
             - name: Check for unused packages
-              run: composer-unused
+              run: composer-unused --excludePackage=symfony/css-selector
 
             - name: Code sniffer fix
               run: ./vendor/bin/php-cs-fixer fix src
