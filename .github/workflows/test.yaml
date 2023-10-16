@@ -1,0 +1,42 @@
+name: Test with PestPHP
+
+on:
+    pull_request:
+        types:
+            - opened
+            - reopened
+    workflow_dispatch:
+
+jobs:
+    test:
+        runs-on: ${{ matrix.operating-system }}
+        strategy:
+            matrix:
+                operating-system: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ]
+                php-versions: [ '8.1', '8.2' ]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup PHP without composer v2 and extensions
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: ${{ matrix.php-versions }}
+                extensions: mbstring
+                tools: composer:v2, composer-unused, php-cs-fixer, phpmd
+                coverage: xdebug
+
+            - name: Install Dependencies
+              run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+            - name: Check for unused packages
+              run: composer-unused
+
+            - name: Code sniffer fix
+              run: ./vendor/bin/php-cs-fixer fix src
+
+            - name: Run PHPMD
+              run: phpmd . github phpmd.xml --exclude 'tests/*,vendor/*,Dummy/*'
+
+            - name: Tests
+              run: ./vendor/bin/pest

@@ -6,7 +6,10 @@ use Illuminate\Support\Collection;
 
 class Items
 {
-    public function __construct(private readonly Collection $items)
+    /**
+     * @param Collection<Collection> $items
+     */
+    public function __construct(public readonly Collection $items)
     {
     }
 

@@ -7,10 +7,10 @@ use Illuminate\Support\Collection;
 class Customer
 {
     public function __construct(
-        private readonly ?string $name = null,
-        private readonly ?string $idType = null,
-        private readonly ?string $id = null,
-        private readonly ?string $mobile = null
+        public readonly ?string $name = null,
+        public readonly ?string $idType = null,
+        public readonly ?string $id = null,
+        public readonly ?string $mobile = null
     ) {
     }
 
