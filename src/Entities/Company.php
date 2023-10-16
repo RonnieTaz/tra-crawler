@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 class Company
 {
     public function __construct(
-        private readonly string $name,
-        private readonly string $mobile,
-        private readonly string $tin,
-        private readonly string $vrn,
-        private readonly string $taxOffice
+        public readonly string $name,
+        public readonly string $mobile,
+        public readonly string $tin,
+        public readonly string $vrn,
+        public readonly string $taxOffice
     ) {
     }
 

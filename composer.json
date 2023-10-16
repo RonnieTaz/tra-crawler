@@ -17,6 +17,9 @@
         }
     ],
     "minimum-stability": "stable",
+    "archive": {
+        "exclude": ["/Dummy"]
+    },
     "require": {
         "php": ">=8.1",
         "spatie/browsershot": "^3.57",

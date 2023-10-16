@@ -7,12 +7,12 @@ use Illuminate\Support\Collection;
 class InvoiceInfo
 {
     public function __construct(
-        private readonly string $serial,
-        private readonly string $uin,
-        private readonly float $totalTax,
-        private readonly float $totalWithoutTax,
-        private readonly float $taxA,
-        private readonly float $totalWithTax
+        public readonly string $serial,
+        public readonly string $uin,
+        public readonly float $totalTax,
+        public readonly float $totalWithoutTax,
+        public readonly float $taxA,
+        public readonly float $totalWithTax
     ) {
     }
 

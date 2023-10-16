@@ -11,6 +11,7 @@ use Ronnie\TRA\Entities\Customer;
 use Ronnie\TRA\Entities\InvoiceInfo;
 use Ronnie\TRA\Entities\Items;
 use Ronnie\TRA\Entities\Receipt;
+use Ronnie\TRA\Entities\ReceiptInfo;
 use Ronnie\TRA\Enum\Constants;
 use Symfony\Component\DomCrawler\Crawler as SymfonyCrawler;
 
@@ -19,9 +20,10 @@ class Crawler implements ResourceCrawler
     public ResourceFetcher $fetcher;
     private bool $test = false;
 
-    public function __construct(?ResourceFetcher $fetcher = null)
+    public function __construct(?ResourceFetcher $fetcher = null, ?array $options = [])
     {
-        $this->fetcher = $fetcher ?? new Fetcher();
+        $timeout = $options['timeout'] ?? null;
+        $this->fetcher = $fetcher ?? new Fetcher(timeout: $timeout ?? null);
     }
 
     public function setTestMode(bool $testMode): self
@@ -52,24 +54,21 @@ class Crawler implements ResourceCrawler
         return $this;
     }
 
-    public function crawl(): \Illuminate\Support\Collection
+    public function crawl(): Receipt
     {
         $this->fetcher->setTestMode($this->test);
+
         $crawler = new SymfonyCrawler($this->fetcher->load());
+
         $info = $crawler->filter('section#inv')->eq(0)->children();
-        $collection = collect();
 
-        $collection->put('company', $this->crawlCompany($info));
-
-        $collection->put('invoice', $this->crawlInvoice($info));
-
-        $collection->put('customer', $this->crawlCustomer($info));
-
-        $collection->put('receipt', $this->crawlReceipt($info));
-
-        $collection->put('items', $this->crawlItems($info));
-
-        return $collection;
+        return new Receipt(
+            info: $this->crawlReceipt($info),
+            company: $this->crawlCompany($info),
+            invoice: $this->crawlInvoice($info),
+            customer: $this->crawlCustomer($info),
+            items: $this->crawlItems($info)
+        );
     }
 
     private function crawlCompany(SymfonyCrawler $crawler): Company
@@ -171,11 +170,11 @@ class Crawler implements ResourceCrawler
         );
     }
 
-    private function crawlReceipt(SymfonyCrawler $crawler): Receipt
+    private function crawlReceipt(SymfonyCrawler $crawler): ReceiptInfo
     {
         $receipt = $crawler->eq(3)->children()->text();
 
-        return new Receipt(
+        return new ReceiptInfo(
             search_from_end(
                 $receipt,
                 'RECEIPT NO: ',
@@ -214,11 +213,11 @@ class Crawler implements ResourceCrawler
 
         $itemSource->each(function (SymfonyCrawler $node) use ($collection) {
             $filteredNode = $node->filter('td');
-            $collection->add([
+            $collection->add(collect([
                 'product_name' => $filteredNode->eq(0)->text(),
                 'quantity' => (int) $filteredNode->eq(1)->text(),
                 'amount' => (float) str_replace(',', '', $filteredNode->eq(2)->text())
-            ]);
+            ]));
         });
 
         return new Items($collection);
