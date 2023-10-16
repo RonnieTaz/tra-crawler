@@ -14,29 +14,38 @@ jobs:
             matrix:
                 operating-system: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ]
                 php-versions: [ '8.1', '8.2' ]
+                node-versions: [ '16', '18', 'lts' ]
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+            -   name: Checkout
+                uses: actions/checkout@v3
 
-            - name: Setup PHP without composer v2 and extensions
-              uses: shivammathur/setup-php@v2
-              with:
-                php-version: ${{ matrix.php-versions }}
-                extensions: mbstring
-                tools: composer:v2, composer-unused, php-cs-fixer, phpmd
-                coverage: xdebug
+            -   name: Setup PHP with composer v2 and extensions
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+                    extensions: mbstring, fileinfo, exif
+                    tools: composer:v2, composer-unused, php-cs-fixer, phpmd
+                    coverage: xdebug
 
-            - name: Install Dependencies
-              run: composer install --no-interaction --prefer-dist --optimize-autoloader
+            -   name: Setup Node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: ${{ matrix.node-versions }}
 
-            - name: Check for unused packages
-              run: composer-unused --excludePackage=symfony/css-selector
+            -   name: Install puppeteer
+                run: npm install puppeteer
 
-            - name: Code sniffer fix
-              run: php-cs-fixer fix src
+            -   name: Install Dependencies
+                run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-            - name: Run PHPMD
-              run: phpmd . github phpmd.xml --exclude 'tests/*,vendor/*,Dummy/*'
+            -   name: Check for unused packages
+                run: composer-unused --excludePackage=symfony/css-selector
 
-            - name: Tests
-              run: ./vendor/bin/pest
+            -   name: Code sniffer fix
+                run: php-cs-fixer fix src
+
+            -   name: Run PHPMD
+                run: phpmd . github phpmd.xml --exclude 'tests/*,vendor/*,Dummy/*'
+
+            -   name: Tests
+                run: ./vendor/bin/pest
